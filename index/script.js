@@ -6,6 +6,7 @@ class Rankings extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      week: 1,
       rankings: [],
     }
   }
@@ -25,8 +26,12 @@ class Rankings extends React.Component {
 
   componentWillMount() {
     this.getRanking().then(
-      (rankings) => {
-        this.setState({rankings: rankings});
+      (data) => {
+        this.setState({
+            week: data.week,
+            rankings: data.rankings
+          }
+        );
       }
     );
   }
@@ -47,7 +52,10 @@ class Rankings extends React.Component {
     });
 
     return (
-      <div className="table">{rankings}</div>
+      <div>
+        <h1>Week {this.state.week}</h1>
+        <div className="table">{rankings}</div>
+        </div>
     );
   }
 }

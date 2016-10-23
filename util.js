@@ -17,7 +17,7 @@ function calcRanking(req, res) {
 
     var callback = function (matches) {
 
-        var result = [];
+        var rankings = [];
 
         var fields = ['name', 'logo', 'score', 'qt1', 'qt2', 'qt3', 'qt4', 'qtot'];
         var qts = ['qt1', 'qt2', 'qt3', 'qt4', 'qtot'];
@@ -33,7 +33,7 @@ function calcRanking(req, res) {
                 qt_diff += Math.abs(away[qt] - home[qt]);
             }
 
-            result.push({
+            rankings.push({
                 'away_name': away['name'],
                 'home_name': home['name'],
                 'away_logo': away['logo'],
@@ -59,9 +59,12 @@ function calcRanking(req, res) {
             }
         };
 
-        result.sort(sortDsc);
+        rankings.sort(sortDsc);
 
-        res.write(JSON.stringify(result));
+        res.write(JSON.stringify({
+            week: week,
+            rankings: rankings
+        }));
         res.end();
 
         /*
