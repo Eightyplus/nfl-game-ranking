@@ -1,0 +1,11 @@
+{
+  "name": "nfl-api-test",
+  "version": "0.0.0",
+  "description": "",
+  "main": "server.js",
+  "repository": "",
+  "author": "",
+  "dependencies": {
+    "node-scrapy": "^0.3.0"
+  }
+}
