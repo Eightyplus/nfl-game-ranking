@@ -3,7 +3,8 @@ var url = require('url');
 var scrapy = require('node-scrapy');
 
 function calcRanking(req, res) {
-    res.writeHead(200, {'Content-Type': 'application/json'});
+    res.status(200);
+    res.header({'Content-Type': 'application/json'});
 
     var url_parts = url.parse(req.url, true);
     var query = url_parts.query;
@@ -354,4 +355,4 @@ function sum(stats, team) {
     return sum;
 }
 
-module.exports = calcRanking;
+exports.calcRanking = calcRanking;

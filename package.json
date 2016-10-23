@@ -6,6 +6,7 @@
   "repository": "",
   "author": "",
   "dependencies": {
+    "express": "^4.14.0",
     "node-scrapy": "^0.3.0"
   }
 }

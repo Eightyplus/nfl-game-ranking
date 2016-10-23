@@ -1,0 +1,13 @@
+.table {
+    display: table;
+    width: 50%;
+    margin: 0 auto;
+}
+
+.row {
+    display: table-row
+}
+
+.away, .home {
+    display: table-cell
+}
