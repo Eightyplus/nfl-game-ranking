@@ -23,8 +23,9 @@ function calcRanking(req, res) {
         week = weekNumber;
     }
 
-    var callback = function (matches) {
+    var callback = function (matchups) {
 
+        var matches = matchups['matchups'];
         var rankings = [];
 
         var fields = ['name', 'logo', 'score', 'qt1', 'qt2', 'qt3', 'qt4', 'qtot'];
@@ -46,7 +47,7 @@ function calcRanking(req, res) {
                 'home_name': home['name'],
                 'away_logo': away['logo'],
                 'home_logo': home['logo'],
-                'ranking': total - 0.5 * qt_diff - 1.5 * diff,
+                'ranking': total - 0.5 * qt_diff - 0.5 * diff,
                 'game_score': {
                     'total': total,
                     'qt_diff': qt_diff,
@@ -54,6 +55,8 @@ function calcRanking(req, res) {
                 },
                 'away_score': away['score'],
                 'home_score': home['score'],
+                'done': matches[j]['done'],
+                'bigplays': matches[j]['bigplays']
             });
         }
 
@@ -72,7 +75,8 @@ function calcRanking(req, res) {
         res.write(JSON.stringify({
             year: year,
             week: week,
-            rankings: rankings
+            rankings: rankings,
+            notplayed: matchups['notplayed']
         }));
         res.end();
 
@@ -105,6 +109,13 @@ function calcRanking(req, res) {
          */
     };
 
+    /* // debug
+    callback = function(matches) {
+        console.log(matches);
+        res.write(matches);
+        res.end();
+    };*/
+
     fetchMatchups(year, week, callback);
 }
 
@@ -116,24 +127,36 @@ function fetchMatchups(year, week, callback) {
 
     var model = {
         away: {
-            logo: { selector: '.away-team .team-logo', get: 'src'},
-            name: { selector: '.away-team .team-data .team-info .team-name'},
-            score: { selector: '.away-team .total-score'},
-            qt1: { selector: '.away-team .first-qt'},
-            qt2: { selector: '.away-team .second-qt'},
-            qt3: { selector: '.away-team .third-qt'},
-            qt4: { selector: '.away-team .fourth-qt'},
-            qtot: { selector: '.away-team .ot-qt'},
+            logo: { selector: 'div.scorebox-wrapper:not(.pre) .away-team .team-logo', get: 'src'},
+            name: { selector: 'div.scorebox-wrapper:not(.pre) .away-team .team-name'},
+            score: {selector: 'div.scorebox-wrapper:not(.pre) .away-team .total-score'},
+            qt1:  { selector: 'div.scorebox-wrapper:not(.pre) .away-team .first-qt', required: false},
+            qt2:  { selector: 'div.scorebox-wrapper:not(.pre) .away-team .second-qt', required: false},
+            qt3:  { selector: 'div.scorebox-wrapper:not(.pre) .away-team .third-qt', required: false},
+            qt4:  { selector: 'div.scorebox-wrapper:not(.pre) .away-team .fourth-qt', required: false},
+            qtot: { selector: 'div.scorebox-wrapper:not(.pre) .away-team .ot-qt', required: false},
         },
         home: {
-            logo: { selector: '.home-team .team-logo', get: 'src'},
-            name: { selector: '.home-team .team-data .team-info .team-name'},
-            score: { selector: '.home-team .total-score'},
-            qt1: { selector: '.home-team .first-qt'},
-            qt2: { selector: '.home-team .second-qt'},
-            qt3: { selector: '.home-team .third-qt'},
-            qt4: { selector: '.home-team .fourth-qt'},
-            qtot: { selector: '.home-team .ot-qt'},
+            logo: { selector: 'div.scorebox-wrapper:not(.pre) .home-team .team-logo', get: 'src'},
+            name: { selector: 'div.scorebox-wrapper:not(.pre) .home-team .team-name'},
+            score: {selector: 'div.scorebox-wrapper:not(.pre) .home-team .total-score'},
+            qt1: { selector:  'div.scorebox-wrapper:not(.pre) .home-team .first-qt', required: false},
+            qt2: { selector:  'div.scorebox-wrapper:not(.pre) .home-team .second-qt', required: false},
+            qt3: { selector:  'div.scorebox-wrapper:not(.pre) .home-team .third-qt', required: false},
+            qt4: { selector:  'div.scorebox-wrapper:not(.pre) .home-team .fourth-qt', required: false},
+            qtot: { selector: 'div.scorebox-wrapper:not(.pre) .home-team .ot-qt', required: false},
+        },
+        timeleft: { selector: 'div.scorebox-wrapper:not(.pre) .time-left', required: false},
+        bigplays: { selector: 'div.scorebox-wrapper:not(.pre) .big-plays .big-plays-count', required: false},
+        notplayed: {
+            away: {
+                logo: { selector: '.pre .away-team .team-logo', get: 'src'},
+                name: { selector: '.pre .away-team .team-name a'},
+            },
+            home: {
+                logo: {selector: '.pre .home-team .team-logo', get: 'src'},
+                name: {selector: '.pre .home-team .team-name a'},
+            }
         }
     };
 
@@ -150,7 +173,12 @@ function fetchMatchups(year, week, callback) {
                 var field = fields[i];
                 result[field] = arr[field][index];
                 if (numbers[i]) {
-                    result[field] = Number(result[field]);
+                    var parsed = Number(result[field]);
+                    if (util.isNumber(parsed)) {
+                        result[field] = parsed;
+                    } else {
+                        console.log("NaN: " + result[field]);
+                    }
                 }
             }
             return result;
@@ -162,11 +190,37 @@ function fetchMatchups(year, week, callback) {
         for (var i = 0; i < away['name'].length; i++) {
             matchups.push({
                 'away': fetchteam(away, fields, numbers, i),
-                'home': fetchteam(home, fields, numbers, i)
+                'home': fetchteam(home, fields, numbers, i),
+                'done': data['timeleft'][i]
             });
         }
 
-        callback(matchups);
+        away = data['notplayed']['away'];
+        home = data['notplayed']['home'];
+
+        var notplayed = [];
+        if (away['name'] != null) {
+            if (typeof away['name'] === 'string' ) {
+                notplayed.push({
+                    'away': {
+                        'name': away['name'],
+                        'logo': away['logo'],
+                    },
+                    'home': {
+                        'name': home['name'],
+                        'logo': home['logo'],
+                    },
+                })
+            } else {
+                for (var j = 0; j < away['name'].length; j++) {
+                    notplayed.push({
+                        'away': fetchteam(away, ['name', 'logo'], j),
+                        'home': fetchteam(home, ['name', 'logo'], j),
+                    })
+                }
+            }
+        }
+        callback({matchups: matchups, notplayed: notplayed});
     });
 }
 
