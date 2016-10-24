@@ -9,7 +9,9 @@ class Arrow extends React.Component {
     var arrow = (this.props.directionLeft) ? '<' : '>';
 
     return (
-      <a className="arrow" href={url}>{arrow}</a>
+      <div className="arrow">
+        <a href={url}>{arrow}</a>
+      </div>
     );
   }
 }
