@@ -76,7 +76,7 @@ function calcRanking(req, res) {
             year: year,
             week: week,
             rankings: rankings,
-            notplayed: matchups['notplayed']
+            unplayed: matchups['unplayed']
         }));
         res.end();
 
@@ -148,7 +148,7 @@ function fetchMatchups(year, week, callback) {
         },
         timeleft: { selector: 'div.scorebox-wrapper:not(.pre) .time-left', required: false},
         bigplays: { selector: 'div.scorebox-wrapper:not(.pre) .big-plays .big-plays-count', required: false},
-        notplayed: {
+        unplayed: {
             away: {
                 logo: { selector: '.pre .away-team .team-logo', get: 'src'},
                 name: { selector: '.pre .away-team .team-name a'},
@@ -195,13 +195,13 @@ function fetchMatchups(year, week, callback) {
             });
         }
 
-        away = data['notplayed']['away'];
-        home = data['notplayed']['home'];
+        away = data['unplayed']['away'];
+        home = data['unplayed']['home'];
 
-        var notplayed = [];
+        var unplayed = [];
         if (away['name'] != null) {
             if (typeof away['name'] === 'string' ) {
-                notplayed.push({
+                unplayed.push({
                     'away': {
                         'name': away['name'],
                         'logo': away['logo'],
@@ -213,14 +213,14 @@ function fetchMatchups(year, week, callback) {
                 })
             } else {
                 for (var j = 0; j < away['name'].length; j++) {
-                    notplayed.push({
+                    unplayed.push({
                         'away': fetchteam(away, ['name', 'logo'], j),
                         'home': fetchteam(home, ['name', 'logo'], j),
                     })
                 }
             }
         }
-        callback({matchups: matchups, notplayed: notplayed});
+        callback({matchups: matchups, unplayed: unplayed});
     });
 }
 
