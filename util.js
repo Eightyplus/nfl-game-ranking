@@ -10,6 +10,7 @@ function calcRanking(req, res) {
     var query = url_parts.query;
     var show_score = typeof query.show_score !== 'undefined';
 
+    var year = query.year || new Date().getFullYear();
     var week = query.week;
     if (typeof week == 'undefined') {
         week = 6;
@@ -62,6 +63,7 @@ function calcRanking(req, res) {
         rankings.sort(sortDsc);
 
         res.write(JSON.stringify({
+            year: year,
             week: week,
             rankings: rankings
         }));
@@ -96,8 +98,7 @@ function calcRanking(req, res) {
          */
     };
 
-    fetchMatchups(week, callback);
-
+    fetchMatchups(year, week, callback);
 }
 
 
@@ -106,8 +107,8 @@ function calcRanking(req, res) {
 
 //positions = positions.filter(function(item, i, ar){ return ar.indexOf(item) === i; });
 
-function fetchMatchups(week, callback) {
-    var url = 'http://www.nfl.com/scores/2016/REG' + week;
+function fetchMatchups(year, week, callback) {
+    var url = 'http://www.nfl.com/scores/'+ year + '/REG' + week;
 
     var model = {
         away: {

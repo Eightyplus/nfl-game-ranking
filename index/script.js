@@ -6,13 +6,17 @@ class Rankings extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      week: 1,
+      week: undefined,
       rankings: [],
     }
   }
 
   getRanking(){
-    return fetch('/ranking')
+    let week = QueryString.week;
+    let year = QueryString.year || new Date().getFullYear();
+    let url = '/ranking?year=' + year + ( typeof week === 'undefined' ? '' : '&week=' + week);
+
+    return fetch(url)
       .then( (response) => {
         return response.json()
       })
@@ -29,6 +33,7 @@ class Rankings extends React.Component {
       (data) => {
         this.setState({
             week: data.week,
+            year: data.year || new Date().getFullYear(),
             rankings: data.rankings
           }
         );
@@ -37,7 +42,10 @@ class Rankings extends React.Component {
   }
 
   render() {
-    console.log(this.state.rankings);
+    if (this.state.rankings) {
+      console.log('Ranking');
+      console.log(this.state.rankings);
+    }
 
     var rankings = this.state.rankings.map(function (rank, index) {
       return <div className="row" key={index}>
@@ -51,11 +59,15 @@ class Rankings extends React.Component {
       </div>
     });
 
+    var title = this.state.week ? this.state.year + ', Week ' + this.state.week : '';
+
     return (
       <div>
-        <h1>Week {this.state.week}</h1>
-        <div className="table">{rankings}</div>
+        <div className="table">
+          <div className="h1">{title}</div>
+          {rankings}
         </div>
+      </div>
     );
   }
 }
