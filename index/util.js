@@ -25,7 +25,8 @@ function isNumber(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
 }
 
-
-exports.getWeekNumber = getWeekNumber;
-exports.weeksInYear = weeksInYear;
-exports.isNumber = isNumber;
+if (typeof exports !== 'undefined') {
+  exports.getWeekNumber = getWeekNumber;
+  exports.weeksInYear = weeksInYear;
+  exports.isNumber = isNumber;
+}
