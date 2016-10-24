@@ -15,7 +15,7 @@ function weeksInYear(year) {
   var month = 11, day = 31, week;
   // Find week that 31 Dec is in. If is first week, reduce date until get previous week.
   do {
-    let d = new Date(year, month, day--);
+    var d = new Date(year, month, day--);
     week = getWeekNumber(d)[1];
   } while (week == 1);
   return week;

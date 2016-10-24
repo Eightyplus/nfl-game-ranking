@@ -5,7 +5,7 @@ class Arrow extends React.Component {
   }
 
   render() {
-    let url = '/?week=' + this.props.week;
+    var url = '/?week=' + this.props.week;
     var arrow = (this.props.directionLeft) ? '<' : '>';
 
     return (
@@ -28,9 +28,9 @@ class Rankings extends React.Component {
   }
 
   getRanking(){
-    let week = QueryString.week;
-    let year = QueryString.year || new Date().getFullYear();
-    let url = '/ranking?year=' + year + ( typeof week === 'undefined' ? '' : '&week=' + week);
+    var week = QueryString.week;
+    var year = QueryString.year || new Date().getFullYear();
+    var url = '/ranking?year=' + year + ( typeof week === 'undefined' ? '' : '&week=' + week);
 
     return fetch(url)
       .then( (response) => {
