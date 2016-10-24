@@ -18,7 +18,7 @@ function calcRanking(req, res) {
 
     var weekNumber = util.getWeekNumber()[1] - 36;
     var week = query.week;
-    if (!util.isNumber(week) || week > weekNumber) {
+    if (!util.isNumber(week) || week < 1 || weekNumber < week) {
         console.log("Defaults to week " + weekNumber);
         week = weekNumber;
     }
