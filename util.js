@@ -112,6 +112,7 @@ function calcRanking(req, res) {
 
 function fetchMatchups(year, week, callback) {
     var url = 'http://www.nfl.com/scores/'+ year + '/REG' + week;
+    console.log('Scraping: ' + url);
 
     var model = {
         away: {

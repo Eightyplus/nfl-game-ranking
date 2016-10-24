@@ -4,7 +4,7 @@ function getWeekNumber(d) {
   d.setHours(0,0,0);
   // Set to nearest Thursday: current date + 4 - current day number
   // Make Sunday's day number 7
-  d.setDate(d.getDate() + 4 - (d.getDay()||7));
+  d.setDate(d.getDate() + 4 - 1 - (d.getDay()||7)); // -1 to stay in previous week!
   var firstDayOfYear = new Date(d.getFullYear(),0,1);
   // Calculate full weeks to nearest Thursday
   var weekNo = Math.ceil(( ( (d - firstDayOfYear) / 86400000) + 1)/7);
