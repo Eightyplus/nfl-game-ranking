@@ -1,13 +1,22 @@
+body {
+    width: 30%;
+    margin: 0 auto;
+}
 .table {
     display: table;
-    width: 50%;
     margin: 0 auto;
 }
 
+.header {
+    font-size: 2em;
+    text-align: center;
+}
+
 .row {
-    display: table-row
+    display: table-row;
 }
 
 .away, .home {
-    display: table-cell
+    display: table-cell;
+    padding: 0 2em;
 }

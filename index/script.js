@@ -63,8 +63,8 @@ class Rankings extends React.Component {
 
     return (
       <div>
+        <div className="header">{title}</div>
         <div className="table">
-          <div className="h1">{title}</div>
           {rankings}
         </div>
       </div>
