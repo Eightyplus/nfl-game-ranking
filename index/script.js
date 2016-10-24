@@ -80,7 +80,7 @@ class Rankings extends React.Component {
     var title = this.state.week ? this.state.year + ', Week ' + this.state.week : '';
 
     var weekNumber = getWeekNumber()[1] - 36;
-    var previous =  <Arrow directionLeft={true} week={this.state.week - 1}/>;
+    var previous =  this.state.week > 0 ? <Arrow directionLeft={true} week={this.state.week - 1}/> : '';
     var next = this.state.week < weekNumber ? <Arrow directionLeft={false} week={parseInt(this.state.week) + 1}/> : '';
 
     return (
