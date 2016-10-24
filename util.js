@@ -12,13 +12,13 @@ function calcRanking(req, res) {
     var show_score = typeof query.show_score !== 'undefined';
 
     var year = query.year;
-    if (typeof year == 'undefined' || !util.isNumber(year)) {
+    if (!util.isNumber(year)) {
         year = new Date().getFullYear()
     }
 
     var weekNumber = util.getWeekNumber()[1] - 36;
     var week = query.week;
-    if (typeof week == 'undefined' || !util.isNumber(week) || week > weekNumber) {
+    if (!util.isNumber(week) || week > weekNumber) {
         console.log("Defaults to week " + weekNumber);
         week = weekNumber;
     }
