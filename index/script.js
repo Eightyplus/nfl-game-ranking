@@ -26,6 +26,7 @@ class Rankings extends React.Component {
     this.state = {
       week: undefined,
       rankings: [],
+      unplayed: []
     }
   }
 
@@ -52,10 +53,35 @@ class Rankings extends React.Component {
         this.setState({
             week: data.week,
             year: data.year || new Date().getFullYear(),
-            rankings: data.rankings
+            rankings: data.rankings,
+            unplayed: data.unplayed
           }
         );
       }
+    );
+  }
+
+  renderRanking(rank, index) {
+    return <div className="row" key={index}>
+      <div className="away">
+        <img src={rank.away_logo || rank.away.logo}/>
+      </div>
+
+      <div className="home">
+        <img src={rank.home_logo || rank.home.logo}/>
+      </div>
+    </div>
+  }
+
+  renderBottom() {
+    var uplayed = this.state.unplayed.map(this.renderRanking);
+
+    return (
+      <div className="unplayed">Unplayed
+        <div className="table">
+          {uplayed}
+        </div>
+      </div>
     );
   }
 
@@ -65,23 +91,12 @@ class Rankings extends React.Component {
       console.log(this.state.rankings);
     }
 
-    var rankings = this.state.rankings.map(function (rank, index) {
-      return <div className="row" key={index}>
-        <div className="away">
-          <img src={rank.away_logo}/>
-        </div>
-
-        <div className="home">
-          <img src={rank.home_logo}/>
-        </div>
-      </div>
-    });
-
     var title = this.state.week ? this.state.year + ', Week ' + this.state.week : '';
-
+    var rankings = this.state.rankings.map(this.renderRanking);
     var weekNumber = getWeekNumber()[1] - 36;
-    var previous =  this.state.week > 1 ? <Arrow directionLeft={true} week={this.state.week - 1}/> : '';
+    var previous = this.state.week > 1 ? <Arrow directionLeft={true} week={this.state.week - 1}/> : '';
     var next = this.state.week < weekNumber ? <Arrow directionLeft={false} week={parseInt(this.state.week) + 1}/> : '';
+    var bottom = this.state.unplayed ? this.renderBottom() : '';
 
     return (
       <div className="container">
@@ -91,6 +106,7 @@ class Rankings extends React.Component {
           <div className="table">
             {rankings}
           </div>
+          {bottom}
         </div>
         {next}
       </div>

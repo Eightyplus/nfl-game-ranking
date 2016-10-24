@@ -51,3 +51,7 @@ a:link, a:visited, a:active {
 .away img,.home img {
     border: solid 0.2em white;
 }
+
+.unplayed {
+    text-align: center;
+}
