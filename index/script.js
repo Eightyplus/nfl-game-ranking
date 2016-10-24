@@ -1,3 +1,19 @@
+class Arrow extends React.Component {
+
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    let url = '/?week=' + this.props.week;
+    var arrow = (this.props.directionLeft) ? '<' : '>';
+
+    return (
+      <a className="arrow" href={url}>{arrow}</a>
+    );
+  }
+}
+
 /**
  * Reactive Ranking class to render matchups for a week
  */
@@ -61,12 +77,20 @@ class Rankings extends React.Component {
 
     var title = this.state.week ? this.state.year + ', Week ' + this.state.week : '';
 
+    var weekNumber = getWeekNumber()[1] - 36;
+    var previous =  <Arrow directionLeft={true} week={this.state.week - 1}/>;
+    var next = this.state.week < weekNumber ? <Arrow directionLeft={false} week={parseInt(this.state.week) + 1}/> : '';
+
     return (
-      <div>
-        <div className="header">{title}</div>
-        <div className="table">
-          {rankings}
+      <div className="container">
+        {previous}
+        <div>
+          <div className="header">{title}</div>
+          <div className="table">
+            {rankings}
+          </div>
         </div>
+        {next}
       </div>
     );
   }

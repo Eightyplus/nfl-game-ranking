@@ -1,6 +1,7 @@
 var http = require('http');
 var url = require('url');
 var scrapy = require('node-scrapy');
+var util = require('./index/util');
 
 function calcRanking(req, res) {
     res.status(200);
@@ -10,10 +11,16 @@ function calcRanking(req, res) {
     var query = url_parts.query;
     var show_score = typeof query.show_score !== 'undefined';
 
-    var year = query.year || new Date().getFullYear();
+    var year = query.year;
+    if (typeof year == 'undefined' || !util.isNumber(year)) {
+        year = new Date().getFullYear()
+    }
+
+    var weekNumber = util.getWeekNumber()[1] - 36;
     var week = query.week;
-    if (typeof week == 'undefined') {
-        week = 6;
+    if (typeof week == 'undefined' || !util.isNumber(week) || week > weekNumber) {
+        console.log("Defaults to week " + weekNumber);
+        week = weekNumber;
     }
 
     var callback = function (matches) {
@@ -100,10 +107,6 @@ function calcRanking(req, res) {
 
     fetchMatchups(year, week, callback);
 }
-
-
-
-
 
 //positions = positions.filter(function(item, i, ar){ return ar.indexOf(item) === i; });
 

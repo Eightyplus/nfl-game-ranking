@@ -2,6 +2,17 @@ body {
     width: 30%;
     margin: 0 auto;
 }
+
+.container {
+    display: flex;
+}
+
+.arrow {
+    font-size: 5em;
+    text-decoration: none;
+    vertical-align: middle;
+}
+
 .table {
     display: table;
     margin: 0 auto;
