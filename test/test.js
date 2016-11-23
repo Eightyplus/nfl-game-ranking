@@ -73,9 +73,29 @@ describe('Fantasy stats', function() {
           assert.notEqual(team, '');
           assert.isNotNull(team, undefined);
 
-          const s = Object.keys(stat);
-          for (let i = 0; i < s.length; i++) {
-            let position = s[i];
+          function sortAsc(a, b) {
+            if (a === b) {
+              return 0;
+            }
+            else {
+              return (a < b) ? -1 : 1;
+            }
+          }
+
+          const positions = Object.keys(stat);
+
+          assert.include(positions, 'DB');
+          assert.include(positions, 'DEF');
+          assert.include(positions, 'DL');
+          assert.include(positions, 'K');
+          assert.include(positions, 'LB');
+          assert.include(positions, 'QB');
+          assert.include(positions, 'RB');
+          assert.include(positions, 'TE');
+          assert.include(positions, 'WR');
+
+          for (let i = 0; i < positions.length; i++) {
+            let position = positions[i];
             let value = stat[position];
             assert.typeOf(value, 'number', 'Expected number for ' + team + ' at position ' + position);
           }
