@@ -423,5 +423,6 @@ exports.mapTeam = mapTeam;
 exports.calcWeek = calcWeek;
 exports.sortAsc = sortAsc;
 exports.sortDsc = sortDsc;
+exports.calcTeamStats = calcTeamStats;
 exports.calcMatchups = calcMatchups;
 exports.sum = sum;
