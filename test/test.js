@@ -119,3 +119,27 @@ describe('Mapping team', function() {
     });
   });
 });
+
+describe('endpoint', function() {
+  describe('get current week ranking', function() {
+    it('be able to reach endpoint ranking', function(done) {
+      const response = {
+        s: null,
+        h: null,
+        w: null,
+
+        status: (code) => { this.s = code; assert.equal(200, code)},
+        header: (header) => { this.h = header; assert.typeOf(header, 'object')},
+        write: (jsonStr) => { this.w = jsonStr; assert.typeOf(jsonStr, 'string')},
+        end: () => {
+          assert.equal(this.s, 200);
+          assert.isNotNull(this.h);
+          assert.isNotNull(this.w);
+          done()
+        },
+        error: () => { assert.fail('No error should be called'); done() }
+      };
+      util.calcRanking({'url': '?no query params'}, response);
+    });
+  });
+});
