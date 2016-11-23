@@ -418,3 +418,10 @@ function sum(stats, team) {
 }
 
 exports.calcRanking = calcRanking;
+exports.fetchMatchups = fetchMatchups;
+exports.mapTeam = mapTeam;
+exports.calcWeek = calcWeek;
+exports.sortAsc = sortAsc;
+exports.sortDsc = sortDsc;
+exports.calcMatchups = calcMatchups;
+exports.sum = sum;
