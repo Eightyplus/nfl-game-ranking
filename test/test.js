@@ -14,3 +14,17 @@ describe('Fetching stats', function() {
     });
   });
 });
+
+
+describe('Mapping team', function() {
+  describe('mapTeam', function() {
+    it('should map Packers to GB', function(done) {
+      assert.equal(util.mapTeam('Packers'), 'GB');
+      done()
+    });
+    it('should map Rams names to LS', function(done) {
+      assert.equal(util.mapTeam('Rams'), 'LA');
+      done()
+    });
+  });
+});
