@@ -5,8 +5,8 @@ class Arrow extends React.Component {
   }
 
   render() {
-    var url = '/?week=' + this.props.week;
-    var arrow = (this.props.directionLeft) ? '<' : '>';
+    const url = '/?week=' + this.props.week;
+    const arrow = (this.props.directionLeft) ? '<' : '>';
 
     return (
       <div className="arrow">
@@ -31,9 +31,9 @@ class Rankings extends React.Component {
   }
 
   getRanking(){
-    var week = QueryString.week;
-    var year = QueryString.year || new Date().getFullYear();
-    var url = '/ranking?year=' + year + ( typeof week === 'undefined' ? '' : '&week=' + week);
+    const week = QueryString.week;
+    const year = QueryString.year || new Date().getFullYear();
+    const url = '/ranking?year=' + year + ( typeof week === 'undefined' ? '' : '&week=' + week);
 
     return fetch(url)
       .then( (response) => {
@@ -74,12 +74,12 @@ class Rankings extends React.Component {
   }
 
   renderBottom() {
-    var uplayed = this.state.unplayed.map(this.renderRanking);
+    const unplayed = this.state.unplayed.map(this.renderRanking);
 
     return (
       <div className="unplayed">Unplayed
         <div className="table">
-          {uplayed}
+          {unplayed}
         </div>
       </div>
     );
@@ -91,12 +91,12 @@ class Rankings extends React.Component {
       console.log(this.state.rankings);
     }
 
-    var title = this.state.week ? this.state.year + ', Week ' + this.state.week : '';
-    var rankings = this.state.rankings.map(this.renderRanking);
-    var weekNumber = getWeekNumber()[1] - 36;
-    var previous = this.state.week > 1 ? <Arrow directionLeft={true} week={this.state.week - 1}/> : '';
-    var next = this.state.week < weekNumber ? <Arrow directionLeft={false} week={parseInt(this.state.week) + 1}/> : '';
-    var bottom = this.state.unplayed ? this.renderBottom() : '';
+    const title = this.state.week ? this.state.year + ', Week ' + this.state.week : '';
+    const rankings = this.state.rankings.map(this.renderRanking);
+    const weekNumber = getWeekNumber()[1] - 36;
+    const previous = this.state.week > 1 ? <Arrow directionLeft={true} week={this.state.week - 1}/> : '';
+    const next = this.state.week < weekNumber ? <Arrow directionLeft={false} week={parseInt(this.state.week) + 1}/> : '';
+    const bottom = this.state.unplayed > 0 ? this.renderBottom() : '';
 
     return (
       <div className="container">
