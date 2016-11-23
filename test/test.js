@@ -60,10 +60,26 @@ describe('Fantasy stats', function() {
       fs.readFile('./test/stats_week4.json', function(error, str) {
         const data = JSON.parse(str)['players'];
         const stats = util.calcTeamStats(data);
+        delete stats[''];
         const matchups = util.calcMatchups(stats, matches);
 
+        const keys = Object.keys(stats);
         assert.lengthOf(data, 1354, 'Number of players with fantasy stats');
-        assert.lengthOf(stats, 30, 'Expect 30 teams this week');
+        assert.lengthOf(keys, 32, 'Expect 32 teams this week' + Object.keys(stats));
+        for (let key in keys) {
+          let team = keys[key];
+          let stat = stats[team];
+
+          assert.notEqual(team, '');
+          assert.isNotNull(team, undefined);
+
+          const s = Object.keys(stat);
+          for (let i = 0; i < s.length; i++) {
+            let position = s[i];
+            let value = stat[position];
+            assert.typeOf(value, 'number', 'Expected number for ' + team + ' at position ' + position);
+          }
+        }
 
         callback(matchups);
       });
