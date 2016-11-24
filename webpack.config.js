@@ -5,7 +5,7 @@ const BUILD_DIR = path.resolve(__dirname, 'index');
 const APP_DIR = path.resolve(__dirname, 'src/app');
 
 const config = {
-  entry: APP_DIR + '/main.js',
+  entry: ['whatwg-fetch', APP_DIR + '/main.js'],
   output: {
     path: BUILD_DIR,
     filename: 'index.js'
@@ -17,6 +17,10 @@ const config = {
         include : APP_DIR,
         loader: 'babel-loader',
         exclude: /node_modules/
+      },
+      {
+        test: /\.json$/,
+        loader: 'json-loader'
       }
     ]
   },

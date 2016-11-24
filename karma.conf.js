@@ -10,7 +10,7 @@ module.exports = function(config) {
     singleRun: false,
     concurrency: Infinity,
     basePath: '',
-    frameworks: ['mocha'],
+    frameworks: ['mocha', 'sinon'],
     files: [
       'tests.webpack.js',
     ],
@@ -27,6 +27,10 @@ module.exports = function(config) {
             test: /\.js$/,
             loader: 'babel-loader',
             exclude: /node_modules/
+          },
+          {
+            test: /\.json$/,
+            loader: 'json-loader'
           }
         ]
       }
