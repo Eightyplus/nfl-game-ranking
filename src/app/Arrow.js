@@ -1,7 +1,7 @@
 import React from 'react';
 const { Component, PropTypes } = React;
 
-module.exports = class Arrow extends Component {
+export default class Arrow extends Component {
 
   constructor(props) {
     super(props);

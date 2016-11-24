@@ -9,7 +9,7 @@ import { getWeekNumber } from '../common/util'
 /**
  * Reactive Ranking class to render matchups for a week
  */
-module.exports = class Rankings extends Component {
+export default class Rankings extends Component {
 
   constructor(props) {
     super(props);
