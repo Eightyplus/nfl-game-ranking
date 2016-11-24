@@ -3,6 +3,9 @@ const { Component, PropTypes } = React;
 
 import Arrow from './Arrow';
 
+import QueryString from './QueryString'
+import { getWeekNumber } from '../common/util'
+
 /**
  * Reactive Ranking class to render matchups for a week
  */

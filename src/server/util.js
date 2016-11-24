@@ -1,7 +1,7 @@
 var http = require('http');
 var url = require('url');
 var scrapy = require('node-scrapy');
-var util = require('./index/util');
+var util = require('./../common/util');
 
 function calcRanking(req, res) {
     res.status(200);

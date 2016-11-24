@@ -2,7 +2,7 @@ const http = require('http');
 const path = require('path');
 const express = require('express');
 const app = express();
-const util = require('./util');
+const util = require('./src/server/util');
 
 app.get('/ranking', util.calcRanking);
 
