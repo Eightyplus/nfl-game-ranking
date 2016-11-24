@@ -76,7 +76,7 @@ export default class Rankings extends Component {
   }
 
   render() {
-    if (this.state.rankings) {
+    if (this.state.rankings.length > 0) {
       console.log('Ranking');
       console.log(this.state.rankings);
     }
