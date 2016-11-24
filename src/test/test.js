@@ -5,7 +5,7 @@ const fs = require('fs');
 const describe = mocha.describe;
 const it = mocha.it;
 const assert = chai.assert;
-const util = require('../util');
+const util = require('../src/server/util');
 
 describe('Fetching stats', function() {
   describe('#fetch()', function() {
