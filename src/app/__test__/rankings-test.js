@@ -12,12 +12,34 @@ const json = {"year":2016,"week":"4","rankings":[{"away_name":"Saints","home_nam
 
 
 describe('root', function () {
-  it('renders without problems', function (done) {
+  let sandbox;
+  beforeEach(function () {
+    sandbox = sinon.sandbox.create();
+  });
+
+  afterEach(function () {
+    sandbox.restore();
+  });
+
+  it('renders without problems, method stubbed', function (done) {
 
     sinon.stub(Rankings.prototype, 'getRanking').returns(
       new Promise(function(resolve, reject) {
         resolve(json);
     }));
+    let ranking = ReactTestUtils.renderIntoDocument(<Rankings/>);
+
+    expect(ranking).toExist();
+    expect(ranking.state.rankings).toExist();
+
+    if (ranking.state.rankings === []) {
+      fail('The rankings was not update within 1 second.');
+    }
+    done();
+  });
+
+  it('renders without problems, endpoint uses karma proxy', function (done) {
+
     let ranking = ReactTestUtils.renderIntoDocument(<Rankings/>);
 
     expect(ranking).toExist();
