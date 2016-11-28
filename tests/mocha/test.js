@@ -5,7 +5,7 @@ const fs = require('fs');
 const describe = mocha.describe;
 const it = mocha.it;
 const assert = chai.assert;
-const util = require('../server/util');
+const util = require('../../src/server/util');
 
 describe('Fetching stats', function() {
   describe('#fetch()', function() {
@@ -57,7 +57,7 @@ describe('Fantasy stats', function() {
       // skip this test, to slow!
       //util.calcWeek(4, matches, callback);
 
-      fs.readFile('./src/test/stats_week4.json', function(error, str) {
+      fs.readFile('./tests/stats_week4.json', function(error, str) {
         const data = JSON.parse(str)['players'];
         const stats = util.calcTeamStats(data);
         delete stats[''];

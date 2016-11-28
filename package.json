@@ -43,7 +43,7 @@
     "build": "webpack --progress --colors",
     "dev": "webpack -d --progress --colors --watch",
     "start": "node server.js",
-    "testmocha": "mocha src/test",
+    "testmocha": "mocha tests/mocha",
     "testnightwatch": "node nightwatch.conf.js && nightwatch",
     "test": "karma start",
     "webpack": "webpack --progress --colors"
