@@ -20,7 +20,8 @@ module.exports = function(config) {
       'tests.webpack.js': [ 'webpack', 'sourcemap' ] //preprocess with webpack and our sourcemap loader
     },
     proxies: {
-      '/ranking': 'http://' + config.hostname + ':'+ config.port + '/base/src/test/http_localhost_8000_rankingweek4.json'
+      '/ranking': 'http://' + config.hostname + ':'+ config.port + '/base/src/test/http_localhost_8000_rankingweek4.json',
+      '/ranking?year=2016' : '/ranking'
     },
     webpack: { //kind of a copy of your webpack config
       devtool: 'inline-source-map', //just do inline source maps instead of the default
