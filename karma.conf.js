@@ -12,7 +12,7 @@ module.exports = function(config) {
     frameworks: ['mocha', 'sinon'],
     files: [
       'tests.webpack.js',
-      {pattern: 'src/test/*.json', included: false, served: true, watched: false, nocache: true}
+      {pattern: 'tests/*.json', included: false, served: true, watched: false, nocache: true}
     ],
     exclude: [
     ],
@@ -20,7 +20,7 @@ module.exports = function(config) {
       'tests.webpack.js': [ 'webpack', 'sourcemap' ] //preprocess with webpack and our sourcemap loader
     },
     proxies: {
-      '/ranking': 'http://' + config.hostname + ':'+ config.port + '/base/src/test/http_localhost_8000_rankingweek4.json',
+      '/ranking': 'http://' + config.hostname + ':'+ config.port + '/base/tests/http_localhost_8000_rankingweek4.json',
       '/ranking?year=2016' : '/ranking',
     },
     webpack: { //kind of a copy of your webpack config
