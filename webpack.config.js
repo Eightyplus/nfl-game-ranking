@@ -16,7 +16,10 @@ const config = {
         test: /\.js$/,
         include : APP_DIR,
         loader: 'babel-loader',
-        exclude: /node_modules/
+        exclude: [
+          /node_modules/,
+          '*-test.js'
+          ]
       },
       {
         test: /\.json$/,
