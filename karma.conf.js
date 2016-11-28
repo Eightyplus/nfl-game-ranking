@@ -21,7 +21,7 @@ module.exports = function(config) {
     },
     proxies: {
       '/ranking': 'http://' + config.hostname + ':'+ config.port + '/base/src/test/http_localhost_8000_rankingweek4.json',
-      '/ranking?year=2016' : '/ranking'
+      '/ranking?year=2016' : '/ranking',
     },
     webpack: { //kind of a copy of your webpack config
       devtool: 'inline-source-map', //just do inline source maps instead of the default
