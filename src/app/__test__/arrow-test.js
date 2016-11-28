@@ -12,27 +12,27 @@ describe('Arrow', function () {
     expect(arrow).to.be.a('Object');
   });
 
-  it('props', function () {
+  it('props defined/undefined', function () {
     let arrow = shallow(<Arrow week={8}/>);
     expect(arrow.props().directionLeft).to.be.undefined;
     expect(arrow.props().week).to.be.defined;
   });
 
-  it('renders without problems', function () {
+  it('check rendering of week property', function () {
     let arrow = mount(<Arrow week={8}/>);
     expect(arrow).to.exits;
     expect(arrow).to.be.a('Object');
     expect(arrow.find('a').text()).to.be.equal('>');
   });
 
-  it('renders without problems', function () {
+  it('check rendering of directionLeft property', function () {
     let arrow = mount(<Arrow directionLeft={true}/>);
     expect(arrow).to.exits;
     expect(arrow).to.be.a('Object');
     expect(arrow.find('a').text()).to.be.equal('<');
   });
 
-  it('renders without problems', function () {
+  it('check rendering of week and directionLeft property', function () {
     let arrow = mount(<Arrow week={8} directionLeft={false}/>);
     expect(arrow).to.exits;
     expect(arrow).to.be.a('Object');
@@ -40,7 +40,7 @@ describe('Arrow', function () {
     expect(arrow.find('a').html()).to.be.equal('<a href="/?week=8">&gt;</a>');
   });
 
-  it('renders without problems', function () {
+  it('check rendering of week and directionLeft property (opposite direction)', function () {
     let arrow = mount(<Arrow week={7} directionLeft={true}/>);
     expect(arrow).to.exits;
     expect(arrow).to.be.a('Object');
