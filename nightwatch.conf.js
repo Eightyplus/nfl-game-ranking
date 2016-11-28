@@ -3,7 +3,7 @@ const BINPATH = './node_modules/nightwatch/bin/';
 
 const config = {
   "src_folders": [
-    "tests"
+    "tests/nightwatch"
   ],
   "output_folder": "./reports",
   "selenium": {
