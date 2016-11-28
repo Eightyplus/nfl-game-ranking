@@ -3,7 +3,7 @@ import ReactTestUtils from 'react-addons-test-utils'
 import sinon from 'sinon';
 
 import { mount, shallow } from 'enzyme';
-$import {assert, expect} from 'chai';
+import {assert, expect} from 'chai';
 
 import Rankings from '../Rankings';
 
