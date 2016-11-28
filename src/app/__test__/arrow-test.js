@@ -3,12 +3,13 @@
 import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils' // ES6
 
-const expect = require('expect');
+import {assert, expect} from 'chai';
 import Arrow from '../Arrow';
 
 describe('Arrow', function () {
   it('renders without problems', function () {
     let root = ReactTestUtils.renderIntoDocument(<Arrow/>);
-    expect(root).toExist();
+    expect(root).to.exits;
+    expect(root).to.be.a('Object');
   });
 });
