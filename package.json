@@ -27,20 +27,24 @@
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^1.8.0",
     "mocha": "^3.1.2",
+    "nightwatch": "^0.9.9",
     "react-addons-test-utils": "^15.4.1",
+    "selenium-download": "^2.0.7",
     "sinon": "^2.0.0-pre",
     "webpack": "^1.13.3",
     "whatwg-fetch": "^1.0.0"
   },
   "bin": {
     "karma": "./node_modules/karma/bin/karma",
-    "mocha": "./node_modules/mocha/bin/mocha"
+    "mocha": "./node_modules/mocha/bin/mocha",
+    "nightwatch": "./node_modules/nightwatch/bin/nightwatch"
   },
   "scripts": {
     "build": "webpack --progress --colors",
     "dev": "webpack -d --progress --colors --watch",
     "start": "node server.js",
     "testmocha": "mocha src/test",
+    "testnightwatch": "node nightwatch.conf.js && nightwatch",
     "test": "karma start",
     "webpack": "webpack --progress --colors"
   }
