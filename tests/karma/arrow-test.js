@@ -3,7 +3,7 @@ import ReactTestUtils from 'react-addons-test-utils' // ES6
 
 import { mount, shallow } from 'enzyme';
 import { expect } from 'chai';
-import Arrow from '../Arrow';
+import Arrow from '../../src/app/Arrow';
 
 describe('Arrow', function () {
   it('renders without problems', function () {
