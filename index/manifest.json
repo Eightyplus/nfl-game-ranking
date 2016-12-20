@@ -1,5 +1,6 @@
 {
-  "name": "NFL App Ranking",
+  "name": "NFL Game Ranking",
+  "short_name": "NFL GR",
   "icons": [
     {
       "src": "icon36x36.png",
@@ -38,7 +39,7 @@
       "density": 4.0
     }
   ],
-  "start_url": "index.html",
+  "start_url": "/",
   "display": "standalone",
   "orientation": "any"
 }
