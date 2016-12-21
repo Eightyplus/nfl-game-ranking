@@ -36,5 +36,31 @@ const config = {
   devtool: 'source-map'
 };
 
+if (process.env.NODE_ENV == 'watch' || process.env.NODE_ENV == 'test') {
+  const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
+
+  config.plugins = [
+    new BrowserSyncPlugin(
+      {
+        host: 'localhost',
+        port: 9090,
+        proxy: 'http://localhost:8000'
+      },
+      {
+        reload: true
+      }
+    ),
+    //new ExtractTextPlugin("style.css")
+  ];
+} else {
+  config.plugins = [
+    //new ExtractTextPlugin("style.css"),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: true
+      }
+    })
+  ]
+}
 
 module.exports = config;
