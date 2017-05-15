@@ -11,14 +11,25 @@ function calcRanking(req, res) {
     var query = url_parts.query;
     var show_score = typeof query.show_score !== 'undefined';
 
+    var now = new Date();
     var year = query.year;
     if (!util.isNumber(year)) {
-        year = new Date().getFullYear()
+        year = now.getFullYear();
     }
 
     var weekNumber = util.getWeekNumber()[1] - 36;
+    if (weekNumber < 1) {
+        weekNumber = 1;
+        if (year == now.getFullYear()) {
+            year = now.getFullYear() - 1;
+        }
+    }
+
+    if (year < 2000) {
+        year = 2000;
+    }
     var week = query.week;
-    if (!util.isNumber(week) || week < 1 || weekNumber < week) {
+    if (!util.isNumber(week) || week < 1 || 17 < week) {
         console.log("Defaults to week " + weekNumber);
         week = weekNumber;
     }
