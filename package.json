@@ -1,0 +1,55 @@
+{
+  "name": "nfl-api-test",
+  "version": "0.0.0",
+  "description": "",
+  "main": "server.js",
+  "repository": "",
+  "author": "",
+  "dependencies": {
+    "express": "^4.14.0",
+    "node-scrapy": "^0.3.0",
+    "react": "^15.4.1",
+    "react-dom": "^15.4.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.18.2",
+    "babel-loader": "^6.2.8",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.16.0",
+    "babel-preset-stage-0": "^6.16.0",
+    "browser-sync": "^2.18.5",
+    "browser-sync-webpack-plugin": "^1.1.3",
+    "chai": "^3.5.0",
+    "enzyme": "^2.6.0",
+    "json-loader": "^0.5.4",
+    "karma": "^1.3.0",
+    "karma-chai": "^0.1.0",
+    "karma-firefox-launcher": "^1.0.0",
+    "karma-mocha": "^1.3.0",
+    "karma-sinon": "^1.0.5",
+    "karma-sourcemap-loader": "^0.3.7",
+    "karma-webpack": "^1.8.0",
+    "mocha": "^3.1.2",
+    "nightwatch": "^0.9.9",
+    "react-addons-test-utils": "^15.4.1",
+    "selenium-download": "^2.0.7",
+    "sinon": "^2.0.0-pre",
+    "webpack": "^1.13.3",
+    "webpack-dev-server": "^1.16.2",
+    "whatwg-fetch": "^1.0.0"
+  },
+  "bin": {
+    "karma": "./node_modules/karma/bin/karma",
+    "mocha": "./node_modules/mocha/bin/mocha",
+    "nightwatch": "./node_modules/nightwatch/bin/nightwatch"
+  },
+  "scripts": {
+    "build": "webpack --progress --colors",
+    "dev": "webpack -d --progress --colors --watch",
+    "start": "node server.js",
+    "testmocha": "mocha tests/mocha",
+    "testnightwatch": "node nightwatch.conf.js && nightwatch",
+    "test": "karma start",
+    "webpack": "webpack --progress --colors"
+  }
+}

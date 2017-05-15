@@ -1,0 +1,57 @@
+html, body, .container {
+    height: 100%;
+    background-color: black;
+    color: white;
+}
+
+body {
+    width: 30%;
+    margin: 0 auto;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.arrow {
+    align-items: center;
+    justify-content: center;
+}
+
+a {
+    font-size: 5em;
+    text-decoration: none;
+}
+
+a:link, a:visited, a:active {
+    color: white;
+}
+
+.table {
+    display: table;
+    margin: 0 auto;
+}
+
+.header {
+    font-size: 2em;
+    text-align: center;
+}
+
+.row {
+    display: table-row;
+}
+
+.away, .home {
+    display: table-cell;
+    padding: 0 2em;
+}
+
+.away img,.home img {
+    border: solid 0.2em white;
+}
+
+.unplayed {
+    text-align: center;
+}
