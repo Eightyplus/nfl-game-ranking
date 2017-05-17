@@ -7,6 +7,58 @@ const it = mocha.it;
 const assert = chai.assert;
 const util = require('../../src/server/util');
 
+describe('Year/week fetching', function() {
+    describe('previous correct year/week', function() {
+        it('should be able to fetch correct input', function() {
+            var query = {year: 2000, week:  12};
+            var year, week;
+            [year, week] = util.getYearWeek(new Date(), query);
+            assert.equal(2000, year);
+        });
+
+        it('should be able to fetch superbowl of season 2016', function() {
+            var query = {year: 2016, week:  22};
+            var year, week, message;
+            [year, week, message] = util.getYearWeek(new Date(), query);
+            assert.equal(2016, year);
+            assert(typeof message === 'undefined');
+        });
+
+        it('should not be able to fetch a overdue date', function() {
+            var query = {year: 2017, week:  1};
+            var year, week, message;
+            [year, week, message] = util.getYearWeek(new Date(2017, 5, 17), query);
+            assert.equal(0, year);
+            assert(typeof message !== 'undefined');
+        });
+
+        it('should not be able to fetch a year before 2000', function() {
+            var query = {year: 1999, week:  1};
+            var year, week, message;
+            [year, week, message] = util.getYearWeek(new Date(), query);
+            assert.equal(0, year);
+            assert(typeof message !== 'undefined');
+        });
+    });
+
+    /*
+     more date tests
+     */
+
+    describe('correct url', function() {
+        it('should be able to compose regular season url', function() {
+            var url = util.getUrl(2000, 16);
+            assert(url.indexOf('/REG') !== -1);
+            assert(url.indexOf('/PRO') === -1);
+        });
+        it('should be able to compose probowl url', function() {
+            var url = util.getUrl(2000, 21);
+            assert(url.indexOf('/PRO') !== -1);
+            assert(url.indexOf('/REG') === -1);
+        });
+    })
+});
+
 describe('Fetching stats', function() {
   describe('#fetch()', function() {
     it('should be able to fetch stats from nfl.com', function(done) {

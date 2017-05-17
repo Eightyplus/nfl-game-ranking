@@ -3,35 +3,60 @@ var url = require('url');
 var scrapy = require('node-scrapy');
 var util = require('./../common/util');
 
+function isSeasonWeek(date) {
+    var weekNumber = util.getWeekNumber(date)[1];
+    if (0 <= weekNumber && weekNumber <= 5) {
+        return weekNumber + 17; // postseason
+    }
+    if (36 <= weekNumber) {
+        return weekNumber - 36;
+    }
+    return -1;
+}
+
+function getYearWeek(date, query) {
+    var year = query.year;
+    var week = query.week;
+
+    var currentWeek = isSeasonWeek(date);
+    var currentYear = date.getFullYear();
+    var isSeason = currentWeek !== -1;
+    if (isSeason && currentWeek > 17) {
+        currentYear -= 1;
+    }
+
+    if (!util.isNumber(week) || !util.isNumber(year) || 
+        year < 2000 ||
+        year > currentYear ||
+        year === currentYear && week > currentWeek) {
+        return [0, 0, 'Invalid year/week combo: (' + year + '/' + week + ')'];
+    }
+    return [year, week]
+}
+
+function getUrl(year, week) {
+    var weekPrefix = week !== 21 ? '/REG' : '/PRO';
+    return 'http://www.nfl.com/scores/' + year + weekPrefix + week;
+}
+
 function calcRanking(req, res) {
     res.status(200);
     res.header({'Content-Type': 'application/json'});
 
-    var url_parts = url.parse(req.url, true);
-    var query = url_parts.query;
+    var query = url.parse(req.url, true).query;
     var show_score = typeof query.show_score !== 'undefined';
 
-    var now = new Date();
-    var year = query.year;
-    if (!util.isNumber(year)) {
-        year = now.getFullYear();
-    }
+    var year, week, message;
+    [year, week, message] = getYearWeek(new Date(), query);
 
-    var weekNumber = util.getWeekNumber()[1] - 36;
-    if (weekNumber < 1) {
-        weekNumber = 1;
-        if (year == now.getFullYear()) {
-            year = now.getFullYear() - 1;
-        }
-    }
-
-    if (year < 2000) {
-        year = 2000;
-    }
-    var week = query.week;
-    if (!util.isNumber(week) || week < 1 || 17 < week) {
-        console.log("Defaults to week " + weekNumber);
-        week = weekNumber;
+    if (year === 0) {
+      res.write(JSON.stringify({
+        year: year,
+        week: week,
+        message: message,
+      }));
+      res.end();
+      return;
     }
 
     var callback = function (matchups) {
@@ -133,7 +158,7 @@ function calcRanking(req, res) {
 //positions = positions.filter(function(item, i, ar){ return ar.indexOf(item) === i; });
 
 function fetchMatchups(year, week, callback) {
-    var url = 'http://www.nfl.com/scores/'+ year + '/REG' + week;
+    var url = getUrl(year, week);
     console.log('Scraping: ' + url);
 
     var model = {
@@ -428,7 +453,10 @@ function sum(stats, team) {
     return sum;
 }
 
-exports.calcRanking = calcRanking;
+exports.isSeasonWeek = isSeasonWeek;
+exports.getYearWeek = getYearWeek;
+exports.getUrl = getUrl;
+
 exports.fetchMatchups = fetchMatchups;
 exports.mapTeam = mapTeam;
 exports.calcWeek = calcWeek;
